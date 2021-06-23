@@ -1,2 +1,0 @@
-# MyCodingInterview
-Coding interview
