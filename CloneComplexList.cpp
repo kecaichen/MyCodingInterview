@@ -6,8 +6,48 @@ ComplexListNode *Clone(ComplexListNode *pHead)
     {
         return nullptr;
     }
+
+    //扩展原链表
+    ComplexListNode *pNode = pHead;
+    while (pNode)
+    {
+        ComplexListNode *pNew = new ComplexListNode;
+        pNew->m_nValue = pNode->m_nValue;
+        pNew->m_pNext = pNode->m_pNext;
+        pNew->m_pSibling = nullptr;
+
+        pNode->m_pNext = pNew;
+
+        pNode = pNew->m_pNext;
+    }
+
+    //Add sibling point
+    pNode = pHead;
+    while (pNode)
+    {
+        if (pNode->m_pSibling)
+        {
+            pNode->m_pNext->m_pSibling = pNode->m_pSibling->m_pNext;
+        }
+        
+        pNode = pNode->m_pNext->m_pNext;
+    }
+
+    //Cutout list to origin and clone list
+    ComplexListNode *pClone = pHead->m_pNext;
+
+    pNode = pHead;
+    while (pNode)
+    {
+        ComplexListNode *pNew = pNode->m_pNext;
+        pNode->m_pNext = pNew->m_pNext;
+
+        pNode = pNode->m_pNext;
+        pNew->m_pNext = pNode ? pNode->m_pNext : nullptr;
+    }
     
-    return nullptr;
+    
+    return pClone;
 }
 
 void Test()
@@ -24,11 +64,16 @@ void Test()
     AddSibling(pComplex1, pComplex4);
     AddSibling(pComplex2, pComplex5);
     AddSibling(pComplex6, pComplex3);
+
+    std::cout << "------------------Before clone------------------" << std::endl; 
     PrintComplexList(pHead);
 
-    // ComplexListNode *pClone = Clone(pHead);
+    ComplexListNode *pClone = Clone(pHead);
+    std::cout << "------------------Clone------------------" << std::endl; 
+    PrintComplexList(pHead);
 
-    // PrintComplexList(pClone);
+    std::cout << "------------------After clone------------------" << std::endl; 
+    PrintComplexList(pClone);
 }
 
 int main()
