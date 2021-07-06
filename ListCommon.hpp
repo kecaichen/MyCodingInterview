@@ -52,6 +52,42 @@ ListNode *AddToTail(ListNode **pHead, int nValue)
     }
 }
 
+size_t GetListLength(ListNode *pHead)
+{
+    size_t nLen = 0;
+
+    ListNode *pNode = pHead;
+    while (pNode)
+    {
+        ++nLen;
+        pNode = pNode->m_pNext;
+    }
+    
+    return nLen;
+}
+
+void AppendToTail(ListNode **pHead, ListNode *pAppendStart)
+{
+    if (pHead == nullptr)
+    {
+        return;
+    }
+
+    ListNode *pNode = *pHead;
+    while (pNode != nullptr)
+    {   
+        if (pNode->m_pNext == nullptr)
+        {
+            pNode->m_pNext = pAppendStart;
+            break;
+        }
+        else
+        {            
+            pNode = pNode->m_pNext;
+        }
+    }    
+}
+
 ComplexListNode *AddToTail(ComplexListNode **pHead, int nValue)
 {
     ComplexListNode *pNode = new ComplexListNode;
