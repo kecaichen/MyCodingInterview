@@ -11,11 +11,11 @@ BinaryTreeNode<T> *ConstructTree(const std::vector<T>& vecPreOrder, const std::v
 
 }
 
-// template<typename T>
-// BinaryTreeNode<T> *ConstructTree(std::vector<int>::iterator iterPreOrder, std::vector<int>::iterator iterInOrder)
-// {
-//     return nullptr;
-// }
+template<typename T>
+BinaryTreeNode<T> *ConstructTree(typename std::vector<T>::const_iterator iterPreOrder, typename std::vector<T>::const_iterator iterInOrder)
+{
+    return nullptr;
+}
 
 void Test()
 {
