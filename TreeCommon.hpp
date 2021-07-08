@@ -14,11 +14,37 @@ void PreOrder(BinaryTreeNode<T> *pRoot, std::vector<T>& vec)
 {
     if (pRoot)
     {
+        vec.push_back(pRoot->m_nodeValue);
+
         PreOrder(pRoot->m_pLeft, vec);
+
+        PreOrder(pRoot->m_pRight, vec);
+    }
+}
+
+template<typename T>
+void InOrder(BinaryTreeNode<T> *pRoot, std::vector<T>& vec)
+{
+    if (pRoot)
+    {
+        InOrder(pRoot->m_pLeft, vec);
 
         vec.push_back(pRoot->m_nodeValue);
 
-        PreOrder(pRoot->m_pRight, vec);
+        InOrder(pRoot->m_pRight, vec);
+    }
+}
+
+template<typename T>
+void PostOrder(BinaryTreeNode<T> *pRoot, std::vector<T>& vec)
+{
+    if (pRoot)
+    {
+        PostOrder(pRoot->m_pLeft, vec);
+
+        PostOrder(pRoot->m_pRight, vec);
+
+        vec.push_back(pRoot->m_nodeValue);
     }
 }
 
@@ -34,36 +60,51 @@ BinaryTreeNode<T> *CreateTreeNode(T nodeValue)
 }
 
 template<typename T>
-BinaryTreeNode<T> *NullptrNode()
-{
-    return nullptr;
-}
-
-template<typename T>
-BinaryTreeNode<T> *ConnectTreeNode(BinaryTreeNode<T> *pRoot, BinaryTreeNode<T> *pLeft, BinaryTreeNode<T> *pRight)
+void ConnectTreeNode(BinaryTreeNode<T> *pRoot, BinaryTreeNode<T> *pLeft, BinaryTreeNode<T> *pRight)
 {
     if (pRoot)
     {
         pRoot->m_pLeft = pLeft;
         pRoot->m_pRight = pRight;
-
-        return pRoot;
-    }
-    else
-    {
-        return nullptr;
     }
 }
 
 template<typename T>
-void PrintTree(BinaryTreeNode<T> *pRoot)
+void InPrintTree(BinaryTreeNode<T> *pRoot)
+{
+    if (pRoot)
+    {
+        InPrintTree(pRoot->m_pLeft);
+
+        std::cout << pRoot->m_nodeValue << ",";
+
+        InPrintTree(pRoot->m_pRight);
+    }  
+}
+
+template<typename T>
+void PrePrintTree(BinaryTreeNode<T> *pRoot)
 {
     if (pRoot)
     {
         std::cout << pRoot->m_nodeValue << ",";
+        
+        PrePrintTree(pRoot->m_pLeft);
 
-        PrintTree(pRoot->m_pLeft);;
-        PrintTree(pRoot->m_pRight);;
+        PrePrintTree(pRoot->m_pRight);
+    }  
+}
+
+template<typename T>
+void PostPrintTree(BinaryTreeNode<T> *pRoot)
+{
+    if (pRoot)
+    {
+        PostPrintTree(pRoot->m_pLeft);
+        
+        PostPrintTree(pRoot->m_pRight);
+
+        std::cout << pRoot->m_nodeValue << ",";
     }  
 }
 
