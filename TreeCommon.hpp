@@ -108,4 +108,14 @@ void PostPrintTree(BinaryTreeNode<T> *pRoot)
     }  
 }
 
+template<typename T>
+void PrintVector(std::vector<T> vec)
+{
+    for (auto iter = vec.begin(); iter != vec.end(); iter++)
+    {
+        std::cout << *iter << ",";
+    }
+    std::cout << std::endl;
+}
+
 

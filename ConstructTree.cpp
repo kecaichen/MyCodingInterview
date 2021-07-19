@@ -1,20 +1,62 @@
 #include "TreeCommon.hpp"
 
+using namespace std;
+
+template<typename T> using cItr = typename vector<T>::iterator;
+
+template<typename T> using Size = typename vector<T>::type_size;
+
 template<typename T>
-BinaryTreeNode<T> *ConstructTree(const std::vector<T>& vecPreOrder, const std::vector<T>& vecInOrder)
+BinaryTreeNode<T> *Construct(typename vector<T>::const_iterator iterPreBegin, typename vector<T>::const_iterator iterInBegin, Size<T> n);
+
+template<typename T>
+BinaryTreeNode<T> *ConstructTree(vector<T>& vecPreOrder, vector<T>& vecInOrder)
 {
     if (vecPreOrder.empty() || vecInOrder.empty() || vecPreOrder.size() != vecInOrder.size())
     {
         return nullptr;
     }
     
+    BinaryTreeNode<T>  *pRet = Construct<>(vecPreOrder.begin(), vecInOrder.begin());
 
+    return pRet;
 }
 
-template<typename T>
-BinaryTreeNode<T> *ConstructTree(typename std::vector<T>::const_iterator iterPreOrder, typename std::vector<T>::const_iterator iterInOrder)
+template<typename T, typename It = typename vector<T>::iterator>
+BinaryTreeNode<T> *Construct(It iterPreBegin, It iterInBegin)
 {
-    return nullptr;
+    const auto rootValue = *iterPreBegin;
+    BinaryTreeNode<T> *pRoot = CreateTreeNode(rootValue);
+
+
+    // Size<T> i = 0;
+    // for (; i != n; i++)
+    // {
+    //     if (*iterInBegin == rootValue)
+    //     {
+    //         break;
+    //     }
+    // }
+
+    // if (i == n)
+    // {
+    //     return nullptr;
+    // }
+
+    // auto l = i;
+    // auto r = n-i-1;
+    
+    // if (l != 0)
+    // {
+    //     pRoot->m_pLeft = Construct(iterPreBegin+1, iterInBegin, l);
+    // }
+
+    // if (r != 0)
+    // {
+    //     pRoot->m_pRight = Construct(iterInBegin+i+1, iterPreBegin+i+1, r);
+    // }
+    
+    return pRoot;     
 }
 
 void Test()
@@ -36,28 +78,35 @@ void Test()
     ConnectTreeNode(pNode4, (BinaryTreeNode<int> *)nullptr, pNode7);
     ConnectTreeNode(pNode6, pNode8, (BinaryTreeNode<int> *)nullptr);
 
-    std::vector<int> vecPreOrder;
+    vector<int> vecPreOrder;
     PreOrder(pNode1, vecPreOrder);
 
-    std::cout << "---------------------------------Preorder---------------------------------" << std::endl;
+    cout << "---------------------------------Preorder---------------------------------" << endl;
     for (const auto& value : vecPreOrder)
     {
-        std::cout << value << ", ";
+        cout << value << ", ";
     }
-    std::cout << std::endl;
+    cout << endl;
     
 
-    std::vector<int> vecInOrder;
+    vector<int> vecInOrder;
     InOrder(pNode1, vecInOrder);
 
-    std::cout << "---------------------------------Inorder---------------------------------" << std::endl;
+    cout << "---------------------------------Inorder---------------------------------" << endl;
     for (const auto& value : vecInOrder)
     {
-        std::cout << value << ", ";
+        cout << value << ", ";
     }
-    std::cout << std::endl;
+    cout << endl;
 
+    BinaryTreeNode<int> *pBuildRoot = ConstructTree(vecPreOrder, vecInOrder);
 
+    vector<int>::iterator Pre = vecPreOrder.begin();vector<int>::iterator PreEnd = vecPreOrder.end();
+    vector<int>::iterator In = vecInOrder.begin();
+
+    PrintVector(vecInOrder);
+
+    BinaryTreeNode<int> *pRet =  Construct<int>(Pre, In);
 
 }
 
