@@ -6,8 +6,8 @@ template<typename T> using cItr = typename vector<T>::iterator;
 
 template<typename T> using Size = typename vector<T>::type_size;
 
-template<typename T>
-BinaryTreeNode<T> *Construct(typename vector<T>::const_iterator iterPreBegin, typename vector<T>::const_iterator iterInBegin, Size<T> n);
+template<typename T, typename It = typename vector<T>::iterator>
+BinaryTreeNode<T> *Construct(It iterPreBegin, It iterInBegin);
 
 template<typename T>
 BinaryTreeNode<T> *ConstructTree(vector<T>& vecPreOrder, vector<T>& vecInOrder)
@@ -17,7 +17,7 @@ BinaryTreeNode<T> *ConstructTree(vector<T>& vecPreOrder, vector<T>& vecInOrder)
         return nullptr;
     }
     
-    BinaryTreeNode<T>  *pRet = Construct<>(vecPreOrder.begin(), vecInOrder.begin());
+    BinaryTreeNode<T>  *pRet = Construct<T, typename vector<T>::iterator>(vecPreOrder.begin(), vecInOrder.begin());
 
     return pRet;
 }
