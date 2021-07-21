@@ -4,10 +4,10 @@ using namespace std;
 
 template<typename T> using cItr = typename vector<T>::iterator;
 
-template<typename T> using Size = typename vector<T>::type_size;
+template<typename T> using Size = typename vector<T>::size_type;
 
-template<typename T, typename It = typename vector<T>::iterator>
-BinaryTreeNode<T> *Construct(It iterPreBegin, It iterInBegin);
+template<typename T, typename It = cItr<T>, typename Sz = Size<T>>
+BinaryTreeNode<T> *Construct(It iterPreBegin, It iterInBegin, Sz size);
 
 template<typename T>
 BinaryTreeNode<T> *ConstructTree(vector<T>& vecPreOrder, vector<T>& vecInOrder)
@@ -16,45 +16,45 @@ BinaryTreeNode<T> *ConstructTree(vector<T>& vecPreOrder, vector<T>& vecInOrder)
     {
         return nullptr;
     }
-    
-    BinaryTreeNode<T>  *pRet = Construct<T, typename vector<T>::iterator>(vecPreOrder.begin(), vecInOrder.begin());
 
+    BinaryTreeNode<T>  *pRet = Construct<T, cItr<T>, Size<T>>(vecPreOrder.begin(), vecInOrder.begin(), vecPreOrder.size());
+    
     return pRet;
 }
 
-template<typename T, typename It = typename vector<T>::iterator>
-BinaryTreeNode<T> *Construct(It iterPreBegin, It iterInBegin)
+template<typename T, typename It = cItr<T>, typename Sz = Size<T>>
+BinaryTreeNode<T> *Construct(It iterPreBegin, It iterInBegin, Sz n)
 {
     const auto rootValue = *iterPreBegin;
     BinaryTreeNode<T> *pRoot = CreateTreeNode(rootValue);
 
 
-    // Size<T> i = 0;
-    // for (; i != n; i++)
-    // {
-    //     if (*iterInBegin == rootValue)
-    //     {
-    //         break;
-    //     }
-    // }
+    Sz i = 0;
+    for (; i != n; i++)
+    {
+        if (*iterInBegin == rootValue)
+        {
+            break;
+        }
+    }
 
-    // if (i == n)
-    // {
-    //     return nullptr;
-    // }
+    if (i == n)
+    {
+        return nullptr;
+    }
 
-    // auto l = i;
-    // auto r = n-i-1;
+    auto l = i;
+    auto r = n-i-1;
     
-    // if (l != 0)
-    // {
-    //     pRoot->m_pLeft = Construct(iterPreBegin+1, iterInBegin, l);
-    // }
+    if (l != 0)
+    {
+        pRoot->m_pLeft = Construct<T, cItr<T>, Size<T>>(iterPreBegin+1, iterInBegin, l);
+    }
 
-    // if (r != 0)
-    // {
-    //     pRoot->m_pRight = Construct(iterInBegin+i+1, iterPreBegin+i+1, r);
-    // }
+    if (r != 0)
+    {
+        pRoot->m_pRight = Construct<T, cItr<T>, Size<T>>(iterInBegin+i+1, iterPreBegin+i+1, r);
+    }
     
     return pRoot;     
 }
@@ -106,7 +106,7 @@ void Test()
 
     PrintVector(vecInOrder);
 
-    BinaryTreeNode<int> *pRet =  Construct<int>(Pre, In);
+    //BinaryTreeNode<int> *pRet =  Construct<int>(Pre, In);
 
 }
 
